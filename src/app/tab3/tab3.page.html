@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Browse
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <ion-item *ngFor="let m of movies">
+    <ion-thumbnail slot="start">
+      <ion-img [src]="getImgPath(m.poster_path)"></ion-img>
+    </ion-thumbnail>
+    {{m.original_title}}
+    <div class="item-note" slot="end">
+      {{m.popularity}}
+    </div>
+  </ion-item> -->
+
+  <ion-item *ngFor="let m of movies">
+    <ion-thumbnail slot="start">
+      <img [src]="getImgPath(m.poster_path)">
+    </ion-thumbnail>
+    <ion-label>
+      <h2>{{m.original_title}}</h2>
+      <span *ngFor="let i of createArray(m.vote_average)">
+        <ion-icon class="rating-star" name="star"></ion-icon>
+      </span>
+      <!-- <p>Listen, I've had a pretty messed up day...</p> -->
+    </ion-label>
+  </ion-item>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more of them...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
