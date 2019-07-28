@@ -16,7 +16,7 @@ export class MovieService {
   constructor(private http: HttpClient) { }
 
   getMovies(pageNo): Observable<any> {
-    return this.http.get<any>(environment.api.listAllSuperheroMovies + environment.api.keyParams+ pageNo);
+    return this.http.get<any>(environment.api.listAllSuperheroMovies + pageNo);
   }
 
 }
