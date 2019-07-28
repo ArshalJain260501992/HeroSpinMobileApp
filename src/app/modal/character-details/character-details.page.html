@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>
+      </ion-title>
+      <ion-buttons start>
+        <button ion-button (click)="dismiss()" class="modalCloseButton">
+         Cancel
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+      <img src="{{character.thumbnail.path + '.' + character.thumbnail.extension}}" />
+      <ion-card-header>
+        <ion-card-subtitle> </ion-card-subtitle>
+        <ion-card-title>{{character.name}}</ion-card-title>
+      </ion-card-header>
+    
+          <ion-card-header>
+            <ion-button expand="block" shape="round" (click)="pickARandomMovieByCharacter()">Pick a movie</ion-button>
+          </ion-card-header>
+      
+
+  </ion-content>

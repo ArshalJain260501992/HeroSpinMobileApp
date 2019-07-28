@@ -18,16 +18,18 @@ import {
   MatIconModule,
   MatButtonModule,
   MatCardModule,
-  MatFormFieldModule } from "@angular/material";
+  MatFormFieldModule } from '@angular/material';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { MovieDetailsPage } from './modal/movie-details/movie-details.page';
+import { CharacterDetailsPage } from './modal/character-details/character-details.page';
 
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, MovieDetailsPage, CharacterDetailsPage],
+  entryComponents: [MovieDetailsPage, CharacterDetailsPage],
   imports: [
     BrowserModule,
   IonicModule.forRoot(),
@@ -45,7 +47,7 @@ import { FormsModule } from '@angular/forms';
   MatCardModule,
   MatFormFieldModule,
   FormsModule,
-  HttpClientModule
+  HttpClientModule,
   ],
   providers: [
     StatusBar,

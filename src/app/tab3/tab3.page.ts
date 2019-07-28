@@ -1,13 +1,14 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { LoadingController, IonInfiniteScroll } from "@ionic/angular";
-import { ActivatedRoute, Router } from "@angular/router";
-import { MovieService } from "../service/movie.service";
-import { environment } from "src/environments/environment.prod";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { LoadingController, IonInfiniteScroll, ModalController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MovieService } from '../service/movie.service';
+import { environment } from 'src/environments/environment.prod';
+import { MovieDetailsPage } from '../modal/movie-details/movie-details.page';
 
 @Component({
-  selector: "app-tab3",
-  templateUrl: "tab3.page.html",
-  styleUrls: ["tab3.page.scss"]
+  selector: 'app-tab3',
+  templateUrl: 'tab3.page.html',
+  styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
   @ViewChild(IonInfiniteScroll, { static: true }) infiniteScroll: IonInfiniteScroll;
@@ -15,33 +16,60 @@ export class Tab3Page {
   movies: any[] = [];
   posterBasePath: string = environment.api.poster;
   apiKeyParam: string = environment.api.keyParams;
-  responseData: any;
-  currentPage: number = 1;
+  movieDetailsURL: string = environment.api.getMovieDetails;
 
-  getImgPath: any = function(path: string) {
+  responseData: any;
+  currentPage = 1;
+
+  getImgPath: any = function (path: string) {
     return this.posterBasePath + path + this.apiKeyParam;
   };
 
-  createArray: any = function(voteAvg) {
-    return Array(Math.round(voteAvg/2));
+  createArray: any = function (voteAvg) {
+    return Array(Math.round(voteAvg / 2));
   };
 
   constructor(
     public movieService: MovieService,
     public loadingController: LoadingController,
     public router: Router,
-    public route: ActivatedRoute
-  ) {}
+    public route: ActivatedRoute,
+    public modalCtrl: ModalController
+  ) { }
 
   ngOnInit() {
     this.getMovies();
+  }
+
+  async showMovieDetails(movie) {
+    let loading = await this.loadingController.create({
+      message: 'Loading...'
+    });
+    await loading.present();
+    let movieDetails: any = {};
+    this.movieService.getMovieDetail(movie.id).subscribe(
+      res => {
+        movieDetails.data = res;
+        loading.dismiss();
+        this.presentMovieModal(movieDetails);
+      }
+    );
+    
+  }
+
+  async presentMovieModal(movieDetails) {
+    const movieModal = await this.modalCtrl.create({
+      component: MovieDetailsPage,
+      componentProps: { movieDetails: movieDetails }
+    });
+    return await movieModal.present();
   }
 
   async getMovies() {
     let loading = null;
     if (this.currentPage < 2) {
       loading = await this.loadingController.create({
-        message: "Loading..."
+        message: 'Loading...'
       });
       await loading.present();
     }
@@ -50,7 +78,6 @@ export class Tab3Page {
         ++this.currentPage;
         this.responseData = res;
         Array.prototype.push.apply(this.movies, res.results);
-        console.log(this.movies);
         if (loading) {
           loading.dismiss();
         }
@@ -66,7 +93,6 @@ export class Tab3Page {
 
   loadData(event) {
     setTimeout(() => {
-      console.log("Done");
       this.getMovies();
       event.target.complete();
 

@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()" class="modalCloseButton">Cancel
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="movie.data">
+
+
+    <img class="movie-poster" [src]="getImgPath(movie?.data.poster_path)">
+    <ion-card-header>
+      <ion-card-subtitle> </ion-card-subtitle>
+      <ion-card-title>{{movie?.data.title}}</ion-card-title>
+      <span *ngIf="movie?.data.runtime">{{movie?.data.runtime + ' mins'}}</span>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item class="item-stable" *ngIf="movie?.data.vote_average">
+          <ion-label>Rating</ion-label>
+          <ion-col></ion-col>
+          <span *ngFor="let i of createArray(movie?.data.vote_average)">
+            <ion-icon class="rating-star" name="star"></ion-icon>
+          </span>
+        </ion-item>
+
+        <ion-item class="item-stable" *ngIf="movie?.data.vote_count">
+          <ion-label>Reviews</ion-label>
+          <ion-col></ion-col>
+          <ion-badge color="secondary" slot="end">{{movie?.data.vote_count}}</ion-badge>
+        </ion-item>
+        <span *ngIf="movie?.data.overview">
+          <ion-item class="item-stable" (click)="toggleDetail(movie?.data.overview)"
+            [ngClass]="{active: isDetailShown(movie?.data.overview)}">
+            <ion-icon name="add-circle-outline" [hidden]="isDetailShown(movie?.data.overview)"></ion-icon>
+            <ion-icon name="remove-circle-outline" [hidden]="!isDetailShown(movie?.data.overview)"></ion-icon>
+            &nbsp;
+            Overview
+          </ion-item>
+          <ion-item class="item-accordion" [hidden]="!isDetailShown(movie?.data.overview)">
+            {{movie?.data.overview}}
+          </ion-item>
+        </span>
+
+
+      </ion-list>
+    </ion-card-content>
+  </div>
+</ion-content>

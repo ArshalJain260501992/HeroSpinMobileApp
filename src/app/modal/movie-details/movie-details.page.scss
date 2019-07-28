@@ -1,0 +1,33 @@
+.movie-poster {
+    height: 40vh;
+    width: 80vw;
+    margin: 0% 10% 0 11%;
+}
+.list .item.item-accordion {
+    line-height: 38px;
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: 0.09s all linear;
+}
+
+.list .item.item-accordion.ng-hide {
+    line-height: 0px;
+}
+
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+    display: block !important;
+}
+.item-accordion {
+    font-size: smaller;
+    color: grey;
+    font-style: normal
+}
+
+.modalCloseButton {
+    background-color: white;
+}
+
+.rating-star {
+    color: gold
+}
