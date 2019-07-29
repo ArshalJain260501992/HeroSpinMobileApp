@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LoadingController, IonInfiniteScroll, ModalController } from '@ionic/angular';
+import { LoadingController, IonInfiniteScroll, ModalController, ToastController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../service/movie.service';
 import { environment } from 'src/environments/environment.prod';
@@ -15,14 +15,13 @@ export class Tab3Page {
 
   movies: any[] = [];
   posterBasePath: string = environment.api.poster;
-  apiKeyParam: string = environment.api.keyParams;
   movieDetailsURL: string = environment.api.getMovieDetails;
 
   responseData: any;
   currentPage = 1;
 
   getImgPath: any = function (path: string) {
-    return this.posterBasePath + path + this.apiKeyParam;
+    return this.posterBasePath + path;
   };
 
   createArray: any = function (voteAvg) {
@@ -34,7 +33,8 @@ export class Tab3Page {
     public loadingController: LoadingController,
     public router: Router,
     public route: ActivatedRoute,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -52,9 +52,15 @@ export class Tab3Page {
         movieDetails.data = res;
         loading.dismiss();
         this.presentMovieModal(movieDetails);
+      },
+      err => {
+        if (loading) {
+          loading.dismiss();
+        }
+        this.presentErrorToast();
       }
     );
-    
+
   }
 
   async presentMovieModal(movieDetails) {
@@ -83,12 +89,23 @@ export class Tab3Page {
         }
       },
       err => {
-        console.log(err);
         if (loading) {
           loading.dismiss();
         }
+        this.presentErrorToast();
       }
     );
+  }
+
+  async presentErrorToast() {
+    const toast = await this.toastController.create({
+      message: 'Something went wrong',
+      duration: 2000,
+      position: 'middle',
+      color: 'danger',
+      showCloseButton: true
+    });
+    toast.present();
   }
 
   loadData(event) {

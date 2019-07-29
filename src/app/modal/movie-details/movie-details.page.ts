@@ -14,9 +14,8 @@ export class MovieDetailsPage implements OnInit {
   shownDetail = false;
 
   posterBasePath: string = environment.api.poster;
-  apiKeyParam: string = environment.api.keyParams;
   getImgPath: any = function (path: string) {
-    return this.posterBasePath + path + this.apiKeyParam;
+    return this.posterBasePath + path;
   };
 
   createArray: any = function (voteAvg) {

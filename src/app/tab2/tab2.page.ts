@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonInfiniteScroll, LoadingController, ModalController } from '@ionic/angular';
+import { IonInfiniteScroll, LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { environment } from 'src/environments/environment.prod';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CharacterService } from '../service/character.service';
@@ -17,12 +17,11 @@ export class Tab2Page {
   characters: any[] = [];
   characterBasePath: string = environment.api.poster;
   responseData: any;
-  apiKeyParam: string = environment.api.keyParams;
-  currentOffset = 1; 
+  currentOffset = 1;
   randomMovieByCharacter: any = {};
   selectedHero = null;
 
-  getImgPath: any = function(thumbnail: any) {
+  getImgPath: any = function (thumbnail: any) {
     return thumbnail.path + '.' + thumbnail.extension;
   };
 
@@ -33,7 +32,8 @@ export class Tab2Page {
     public loadingController: LoadingController,
     public router: Router,
     public route: ActivatedRoute,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public toastController: ToastController
   ) {
   }
 
@@ -56,7 +56,7 @@ export class Tab2Page {
 
   async getCharacters() {
     let loading = null;
-    if (this.currentOffset < 1) {
+    if (this.currentOffset < 2) {
       loading = await this.loadingController.create({
         message: 'Loading...'
       });
@@ -72,12 +72,23 @@ export class Tab2Page {
         }
       },
       err => {
-        console.log(err);
         if (loading) {
           loading.dismiss();
         }
+        this.presentErrorToast();
       }
     );
+  }
+
+  async presentErrorToast() {
+    const toast = await this.toastController.create({
+      message: 'Something went wrong',
+      duration: 2000,
+      position: 'middle',
+      color: 'danger',
+      showCloseButton: true
+    });
+    toast.present();
   }
 
   loadData(event) {

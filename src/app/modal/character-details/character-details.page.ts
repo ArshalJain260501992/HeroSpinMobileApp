@@ -44,11 +44,17 @@ export class CharacterDetailsPage implements OnInit {
       res => {
         loading.dismiss();
         if (res == null) {
-          this.presentErrorToast();
+          this.presentErrorToast('No movie found for this character');
         } else {
           this.randomMovieByCharacter.data = res;
           this.presentMovieModal(this.randomMovieByCharacter);
         }
+      },
+      err => {
+        if (loading) {
+          loading.dismiss();
+        }
+        this.presentErrorToast('Something went Wrong');
       }
     );
     
@@ -62,9 +68,9 @@ export class CharacterDetailsPage implements OnInit {
     return await movieModal.present();
   }
 
-  async presentErrorToast() {
+  async presentErrorToast(msg) {
     const toast = await this.toastController.create({
-      message: 'No movie found for this character !!',
+      message: msg,
       duration: 2000,
       position: 'middle',
       color: 'danger',

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController, LoadingController } from '@ionic/angular';
+import { ModalController, LoadingController, ToastController } from '@ionic/angular';
 import { MovieDetailsPage } from '../modal/movie-details/movie-details.page';
 import { MovieService } from '../service/movie.service';
 
@@ -11,7 +11,10 @@ import { MovieService } from '../service/movie.service';
 export class Tab1Page {
   pickedMovie: any = {};
 
-  constructor(public modalCtrl: ModalController, public movieService: MovieService, public loadingController: LoadingController) {
+  constructor(public modalCtrl: ModalController,
+    public movieService: MovieService,
+    public loadingController: LoadingController,
+    public toastController: ToastController) {
   }
 
   async pickARandomMovie() {
@@ -23,11 +26,24 @@ export class Tab1Page {
       res => {
         this.pickedMovie.data = res;
         loading.dismiss();
-      }
-    );
-    this.presentMovieModal(this.pickedMovie);
+        this.presentMovieModal(this.pickedMovie);
+      },
+      error => {
+        loading.dismiss();
+        this.presentErrorToast();
+      });
   }
 
+  async presentErrorToast() {
+    const toast = await this.toastController.create({
+      message: 'Something went wrong',
+      duration: 2000,
+      position: 'middle',
+      color: 'danger',
+      showCloseButton: true
+    });
+    toast.present();
+  }
   async presentMovieModal(movie) {
     const movieModal = await this.modalCtrl.create({
       component: MovieDetailsPage,

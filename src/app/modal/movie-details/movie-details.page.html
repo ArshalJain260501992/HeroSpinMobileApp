@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="movie.data">
+  <div *ngIf="movie?.data">
 
 
     <img class="movie-poster" [src]="getImgPath(movie?.data.poster_path)">
@@ -35,10 +35,11 @@
         <span *ngIf="movie?.data.overview">
           <ion-item class="item-stable" (click)="toggleDetail(movie?.data.overview)"
             [ngClass]="{active: isDetailShown(movie?.data.overview)}">
+
+            Overview
+            &nbsp;
             <ion-icon name="add-circle-outline" [hidden]="isDetailShown(movie?.data.overview)"></ion-icon>
             <ion-icon name="remove-circle-outline" [hidden]="!isDetailShown(movie?.data.overview)"></ion-icon>
-            &nbsp;
-            Overview
           </ion-item>
           <ion-item class="item-accordion" [hidden]="!isDetailShown(movie?.data.overview)">
             {{movie?.data.overview}}
