@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Hero Spin
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item *ngFor="let m of movies" (click)="showMovieDetails(m)">
+    <ion-thumbnail slot="start">
+      <img [src]="getImgPath(m.poster_path)">
+    </ion-thumbnail>
+    <ion-label>
+      <h2>{{m.original_title}}</h2>
+      <span *ngFor="let i of createArray(m.vote_average)">
+        <ion-icon class="rating-star" name="star"></ion-icon>
+      </span>
+    </ion-label>
+  </ion-item>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more of them...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

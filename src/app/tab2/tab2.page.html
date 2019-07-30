@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Hero Spin
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-item *ngFor="let c of characters" (click)="presentCharacterModal(c)">
+      <ion-thumbnail slot="start">
+        <img [src]="getImgPath(c.thumbnail)">
+      </ion-thumbnail>
+      <ion-label>
+        <h3>{{c.name}}</h3>
+      </ion-label>
+    </ion-item>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more of them...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-content>
