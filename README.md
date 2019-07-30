@@ -38,10 +38,6 @@ To successfully get this project up and running one has to clone the repository 
   > ionic serve -l (to run in lab mode, application starts at localhost:8200)
   > ionic serve (application starts at localhost:8100) 
 
-### Application User Interface [Click the image if not appearing embedded]
-![UI Screenshot]()
-
-
 ### Publishing the app
 First you need to download the Android SDK. Follow the below steps:
 Set up the Android development environment
