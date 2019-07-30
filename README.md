@@ -5,10 +5,15 @@ Sometimes, having too many options can be overwhelming. We’ve all been there. 
 It is a hybrid app that can be used on iOS and android.
 * It has 3 screens or tabs - to pick a random movie, to pick a random movie  of a super-hero / character, browse all super hero movies.
 * Additionally there are 2 pop-over modals which displays the detailed information of the movie or the character picked.
-* The application is user-friendly and very fast.
 
 ## Limitations
-* The API sources used for characters and movies are discrete; so there will be scenarios where a movie could not be found for a character.
+* The API sources used for characters and movies are from completely different sources; so there will be scenarios where a movie could not be found for a character.
+
+## Feature Debt
+* Search option for Movies and Characters in the browsing screen.
+* Swiping between tabs.
+* Better cosmetics
+
 ## Getting Started
 
 To successfully get this project up and running one has to clone the repository which has UI project. The application is build using ionic 5.2 framework, Apache cordova 9.0 with Angular 7.3.
@@ -16,7 +21,7 @@ To successfully get this project up and running one has to clone the repository 
 ### Prerequisites
 * [Node Js](https://nodejs.org/en/) - The package manager
 * [Ionic 5.2](https://ionicframework.com/) - The open-source SDK for hybrid mobile app development 
-* [Apache Cordova 9.0](https://cordova.apache.org/) -Mobile application development framework.
+* [Apache Cordova 9.0](https://cordova.apache.org/) - Mobile application development framework.
 * [Angular 7 or above](https://angular.io/guide/quickstart) - The web framework used
 
 ### Application deployment
